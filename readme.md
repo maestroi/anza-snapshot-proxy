@@ -13,6 +13,7 @@ Make sure Docker and Docker Compose are installed on your system. You can check 
 ```bash
 docker --version
 docker-compose --version
+```
 
 Project Structure
 	•	Dockerfile: A multi-stage Dockerfile that builds and runs the Go application.
@@ -24,36 +25,36 @@ Setup and Installation
 
 Docker
 	1.	Clone the repository:
-
+```
 git clone <repository-url>
 cd <repository-directory>
-
+```
 
 	2.	Build the Docker image:
-
+```
 docker build -t snapshot-proxy .
-
+```
 
 	3.	Run the Docker container:
-
+```
 docker run -p 14705:14705 snapshot-proxy
-
+```
 
 
 Docker Compose
 
 Docker Compose simplifies the process of managing multiple containers. To use Docker Compose:
 	1.	Clone the repository if you haven’t already:
-
+```
 git clone <repository-url>
 cd <repository-directory>
-
+```
 
 	2.	Create the config.json file in the project directory with your desired whitelist and blacklist configurations.
 	3.	Build and start the service using Docker Compose:
-
+```
 docker-compose up --build
-
+```
 
 	4.	The service will be accessible at http://localhost:14705 (or your host’s IP address).
 
