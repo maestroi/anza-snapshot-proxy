@@ -1,0 +1,11 @@
+services:
+  snapshot-proxy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: anza-proxy
+    ports:
+      - "14705:14705"  # Expose port 14705 on the host machine
+    volumes:
+      - ./config.json:/app/config.json  # Mount any local directory to the container (optional)
+    restart: unless-stopped

@@ -1,0 +1,10 @@
+{
+    "whitelisted_methods": [
+      "getSlot",
+      "getVersion",
+      "getGenesisHash"
+    ],
+    "blacklisted_methods": [
+      "getClusterNodes"
+    ]
+  }

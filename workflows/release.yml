@@ -1,0 +1,47 @@
+name: Release
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.23'
+
+    - name: Build binary
+      run: |
+        CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags "-X main.version=$(git describe --tags --abbrev=0)" -o solana-snapshot-finder
+    - name: Archive binary
+      run: |
+        echo "Listing files before archiving:"
+        ls -l
+        tar -czvf solana-snapshot-finder.tar.gz solana-snapshot-finder
+        echo "Listing files after archiving:"
+        ls -l
+
+    - name: Upload release asset (tar.gz)
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./solana-snapshot-finder.tar.gz
+        asset_name: solana-snapshot-finder.tar.gz
+        asset_content_type: application/gzip
+      env:
+        GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+    - name: Upload release asset (binary)
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./solana-snapshot-finder
+        asset_name: solana-snapshot-finder
+        asset_content_type: application/octet-stream
+      env:
+        GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
